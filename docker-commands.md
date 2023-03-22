@@ -1,80 +1,91 @@
-# With docker manually
-## create network for services
-docker network create mongodb-network
+# Run the app with docker manually
+## Create a docker network for the following services
+    docker network create mongodb-network
 
-## mongodb
-docker run -d \
---network mongodb-network \
---name mongodb \
--e MONGO_INITDB_ROOT_USERNAME=admin \
--e MONGO_INITDB_ROOT_PASSWORD=admin \
--p 27017:27017 \
--v data-mongodb:/data/db \
-mongo
+## Run the mongo image
+    docker run -d \
+    --network mongodb-network \
+    --name mongodb \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=admin \
+    -p 27017:27017 \
+    -v data-mongodb:/data/db \
+    mongo
 
-## mongo-express
-docker run -d \
---network mongodb-network \
---name mongo-express \
--p 8081:8081 \
--e ME_CONFIG_MONGODB_SERVER=mongodb \
--e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
--e ME_CONFIG_MONGODB_ADMINPASSWORD=admin \
-mongo-express
+## Run the mongo-express image
+    docker run -d \
+    --network mongodb-network \
+    --name mongo-express \
+    -p 8081:8081 \
+    -e ME_CONFIG_MONGODB_SERVER=mongodb \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD=admin \
+    mongo-express
 
-## run the application locally
-npm install
-npm run start:local
+## Run the web app instance locally
+Run the following command in the **_./src_** folder:
+<br>
 
-#==================================================
+    npm install && npm run start:local
 
-## run the application as docker container
-docker build -t web-app:1.0 .
+<hr>
 
-## run image web-app
-docker run -d \
--p 3000:3000 \
---network mongodb-network \
---name web-app \
-web-app:1.0
+## Or run web app as docker container instead of locally
+Run the following command in the root **_./_** folder:
+<br>
+
+    docker build -t web-app:1.0 .
+
+## Run image for web app
+    docker run -d \
+    -p 3000:3000 \
+    --network mongodb-network \
+    --name web-app \
+    web-app:1.0
+
+<hr>
 
 ## Stop all containers
-docker stop $(docker ps -aq)
+    docker stop $(docker ps -aq)
 
 ## Remove all containers
-docker rm $(docker ps -aq)
+    docker rm $(docker ps -aq)
 
 ## Remove all images
-docker rmi $(docker images -q)
+    docker rmi $(docker images -q)
 
-## run the application with docker
-npm run start:docker
+<hr>
 
-# With docker-compose
+# Run the whole app with docker-compose
+Run the following commands in the root **_./_** folder:
 
-## Start:
-docker-compose \
--f mongodb-docker-compose.yaml \
-up -d
+## Start the app:
+    docker-compose \
+    -f mongodb-docker-compose.yaml \
+    up -d
 
-## Stop:
-docker-compose \
--f mongodb-docker-compose.yaml \
-down
+## Stop the app:
+    docker-compose \
+    -f mongodb-docker-compose.yaml \
+    down
 
-## Rebuild with docker-compose
-docker-compose \
--f mongodb-docker-compose.yaml up \
---build -d
+## Rebuild any image with docker-compose
+    docker-compose \
+    -f mongodb-docker-compose.yaml up \
+    --build -d
 
-# Application web page
+<hr>
+
+# App web page
 http://localhost:3000/
 
 # Mongo express web page
 http://localhost:8081
 
-# Create mongo database
-user-db
+<hr>
+
+# Create mongo database with mongo-express
+Create a **_mongodb_** with the name `user-db`
 
 # Create mongo collection for `user-db` database
-users
+Create a mongo collection named `users` for the `user-db` database
