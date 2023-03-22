@@ -1,4 +1,6 @@
 # Run the app with docker manually
+Clone the project on your machine and follow the steps.
+
 ## Create a docker network for the following services
     docker network create mongodb-network
 
