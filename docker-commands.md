@@ -89,3 +89,6 @@ Create a **_mongodb_** with the name `user-db`
 
 # Create mongo collection for `user-db` database
 Create a mongo collection named `users` for the `user-db` database
+
+# The expected result
+![mongo-express](https://user-images.githubusercontent.com/9445673/226988721-f75ed3a9-4c3d-4b67-919b-ad9ac016e261.jpeg)
